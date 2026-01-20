@@ -1,8 +1,3 @@
-# Early-Cascade-Injection
-
-
-
-
 # Deadlock
 
  When Threads Wait Forever
@@ -33,7 +28,12 @@
 
    But this attack does not let any attacker get entry directly to kernel . 
 
-   To get direct entry to kernel there is IRQL 
+# SPECIAL USER APC INJECTION CODE (DEADLOCK CODE)
+
+
+
+
+    
 
 
    # IRQL 
@@ -56,7 +56,32 @@
 
    By delaying or racing callbacks , blocking certain APC , starving a monitoring thread . All of this degrades what EDR "sees" or how reliably it can respond .
 
-   
+
+# IRQL HIERARCHY 
+
+
+
+
+
+
+
+
+# MAPPING THREE TYPES OF APC TO IRQL 
+
+# WHAT COULD BE THE DEFENSIVE APPROACH TO THE PROCESS
+
+
+# MOST ADVANCE FORM OF APC INJECTION ( A NOVEL APPROACH )
+
+# EARLY CASCADE INJECTION 
+
+# REQUIRED PREREQUISITES
+
+ # FUTION ARCHITECTURE
+
+ # TECHNICAL FLOW 
+
+ # FAQs
 
    
 
