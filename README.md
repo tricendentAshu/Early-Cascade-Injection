@@ -145,6 +145,10 @@ It is mainly used during crashes of system to safely write diagnoatic data(dump 
 
 # REQUIRED PREREQUISITES
 
+So before we start with the explanation of this Novel Approach aka Early Cascade Injection , we should know about some prerequisites as these are very important for our understanding .
+
+
+
 # EARLY CASCADE INJECTION 
 
  # FUNCTION ARCHITECTURE
