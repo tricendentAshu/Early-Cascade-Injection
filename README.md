@@ -77,7 +77,7 @@ This level has full access to the pageable memory i.e the memory that can be swa
 
 The threads are allowed to wait or sleep on synchronisation objects like Mutexes and Semaphores.
 
-**CODE EXPLANATION** --ATIQ BHAI
+
 
 **2. APC LEVEL**
 
@@ -89,7 +89,7 @@ When a file read finishes , the system uses special kernel APC to notify the thr
 
 There are some constraints with this level and that is You can still access pageabel memory , but this creates a "critical section" where the current APC cannot be interrupted by other APCs.
 
-**CODE EXPLANATION** --ATIQ BHAI
+
 
 **3. DISPATCH LEVEL**
 
@@ -98,7 +98,7 @@ It handles the time-critical operations. Here there is no pageable memory as the
 
 But what is Windows Scheduler - when windows raises the IRQL to
 
-**CODE EXPLANATION** --ATIQ BHAI
+
 
 **4. DIRQL (DEVICE IRQL)**
 
@@ -108,9 +108,15 @@ The basic GOAL of this level is to Execute extremely quickly to capture data , q
 
 This takes us to our last Level
 
+**5. HIGH LEVEL**
+
 The DO NOT DISTURB ZONE 
 
+This level also caters the system , it halts all the system activities to execute a command . It has two very important Linked Process :
+1.Bug Check
+It is mainly used during crashes of system to safely write diagnoatic data(dump files) without interference from drivers or a scheduler(like in Level 3). 
 
+2.NMI (Non-Maskable Interrupts) - It is Reserved for critical hardware failures like memory corruption.
 
 
 
