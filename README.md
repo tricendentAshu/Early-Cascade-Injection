@@ -5,7 +5,6 @@
  PROVIDE ANALOGY ............ ATIQ BHAI
 
  Deadlock is a state in which atleast two threads/processes are stuck in a loop because they are dependent on each other they are stick beacuse resource that is needed by other processes/threads is held 
- 
  by the first one .
 
  Because each thread holds a resource the other needs, and neither releases what they have until they get the other resource, they remain stuck forever unless something breaks the cycle.
