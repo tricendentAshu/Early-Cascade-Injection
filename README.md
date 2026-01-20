@@ -81,7 +81,7 @@ The threads are allowed to wait or sleep on synchronisation objects like Mutexes
 
 **2. APC LEVEL**
 
-It is a Software Interrupt Zone , in this level the activity that is executed is basic I/O Completeion Routines and Thread suspension. But why it is called APC level , it is because APC is a software interrut targeted at a specific thread.
+It is a Software Interrupt Zone , in this level the activity that is executed is basic I/O Completeion Routines and Thread suspension. But why it is called APC level , it is because APC is a software interrut targeted at a specific thread and the I/O routines are handled by the Threads of a System.
 
 For example :
 
