@@ -113,6 +113,7 @@ This takes us to our last Level
 The DO NOT DISTURB ZONE 
 
 This level also caters the system , it halts all the system activities to execute a command . It has two very important Linked Process :
+
 1.Bug Check
 It is mainly used during crashes of system to safely write diagnoatic data(dump files) without interference from drivers or a scheduler(like in Level 3). 
 
