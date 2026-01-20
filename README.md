@@ -143,9 +143,9 @@ It is mainly used during crashes of system to safely write diagnoatic data(dump 
 
 # MOST ADVANCE FORM OF APC INJECTION ( A NOVEL APPROACH )
 
-# EARLY CASCADE INJECTION 
-
 # REQUIRED PREREQUISITES
+
+# EARLY CASCADE INJECTION 
 
  # FUNCTION ARCHITECTURE
 
