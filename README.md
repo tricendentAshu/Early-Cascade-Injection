@@ -102,6 +102,24 @@ But what is Windows Scheduler - when windows raises the IRQL to
 
 **4. DIRQL (DEVICE IRQL)**
 
+This level caters the hardwares of a System so it is also called The Hardware Zone or Device IRQL . In this level there is INterrupt Services Routines(ISRs) for devices like netowork cards (if people still use it ) , mice , or storage(100k GB).
+
+The basic GOAL of this level is to Execute extremely quickly to capture data , queue a DPCand return control. But there are some contraints and these are that the Execution must be almost immediate , since no waiting or apging is allowed .
+
+This takes us to our last Level
+
+The DO NOT DISTURB ZONE 
+
+
+
+
+
+
+
+
+
+
+
 
  
 
