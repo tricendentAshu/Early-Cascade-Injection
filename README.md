@@ -144,10 +144,23 @@ It is mainly used during crashes of system to safely write diagnoatic data(dump 
 
 # MOST ADVANCE FORM OF APC INJECTION ( A NOVEL APPROACH )
 
+In APC injection we used to exploit different processes to execute our malicious code into the system that can get flagged by system's EDR , but have you ever thought as an attacker what if use insert the 
+malicious code and queue it within the process without getting flagged by the EDR , Well Well Well Using Early Cascade Injection we can achieve this goal , but before starting with this Novel Approach we need
+to know some terms that will help us understand this.
+
 # REQUIRED PREREQUISITES
 
-So before we start with the explanation of this Novel Approach aka Early Cascade Injection , we should know about some prerequisites as these are very important for our understanding .
+Since Early Cascade Injection is an approach that stuns the windows internally the internal system plays a key role in making a system vulnerable . Below are some terms that acts as exection units / function for 
+this Technique.
 
+_SHIMS ENGINE_
+
+Shims engine is bascially a subsystem of winodws that helps older or incompatible application to run on newer versions of Windows without modifying the application itself.
+
+Now you must be thinking BUT WHY DOES THIS EXIST ?
+
+Well it exists because when the windows evolves (windows 10 -> windows 11) , the APIs chnages , Security restriction increases this can lead to older application getting crashed or refuse to run , so instead of forcing developers to rewrite (which they will hate after every evolution)
+Windows uses SHIMS.
 
 
 # EARLY CASCADE INJECTION 
