@@ -120,8 +120,49 @@ It is mainly used during crashes of system to safely write diagnoatic data(dump 
 
 2.NMI (Non-Maskable Interrupts) - It is Reserved for critical hardware failures like memory corruption.
 
+# Mapping APC Types to IRQL Levels
 
+After understanding the IRQL hierarchy, APC behavior can be mapped based purely on where execution is permitted.
 
+**PASSIVE_LEVEL -- User APC Execution**
+
+All user-mode APC payloads execute at PASSIVE_LEVEL.
+This is the only IRQL at which user code can safely run.
+
+Mapped APC types:
+
+Simple User APC
+
+Early Bird APC
+
+Special User APC
+
+Early Cascade Injection
+
+Differences between these APC types affect delivery timing, not execution level.
+
+**APC_LEVEL -- Kernel APC Execution**
+
+Kernel APC routines execute at APC_LEVEL and are part of kernel scheduling and I/O mechanisms.
+
+Mapped APC types:
+
+ Normal Kernel APC
+ 
+ Special Kernel APC
+
+These APCs operate under stricter execution rules and do not involve user-mode payload execution.
+
+Key Mapping Rule : 
+
+ User APCs → PASSIVE_LEVEL
+ 
+ Kernel APCs → APC_LEVEL
+
+IRQL determines where execution is allowed, while APC type determines when the execution opportunity occurs.
+
+Refer to the image below for better understanding 
+<img width="2725" height="1387" alt="unnamed (10)" src="https://github.com/user-attachments/assets/320c83dc-4ae6-44a5-9c44-76407f6af131" />
 
 
 
