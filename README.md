@@ -59,6 +59,7 @@
 # IRQL HIERARCHY 
 
 Now IRQL has a hierarchy mechanism to determine which process will be executed first .There are 5 leavels to determine it.
+<img width="2752" height="1494" alt="unnamed (8)" src="https://github.com/user-attachments/assets/0e947b32-9e10-4203-baff-5a740c388d8e" />
 
 The Five Levels are :
 * PASSIVE LEVEL
