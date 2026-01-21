@@ -165,6 +165,16 @@ Windows uses SHIMS.
 
 # EARLY CASCADE INJECTION 
 
+Well now that we know the prerequisites we can start undertanding , how we can use this novel approach to inject the shellcode within the process .
+
+Early Cscade Injection is a Process Injection Technique in Windows that was introduced by OUTFLANK in 2024 . It injects the shellcode during the process creation stage ( not after the process is created as in APC ) . 
+
+This technique executes specifically in the *user-mode initialization phase* but before most EDR( Endpoint Detection and Response ) solution fully initialize their user-mode detection mechanisms.
+
+This technique also avoids drawbacks such as cross - process APC queuing becuase in this execution occurs within a process so it does not need other process to work and loader-lock restrictions.
+
+
+
  # FUNCTION ARCHITECTURE
 
  # TECHNICAL FLOW 
