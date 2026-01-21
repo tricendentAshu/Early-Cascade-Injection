@@ -155,7 +155,7 @@ this Technique.
 
 _SHIMS ENGINE_
 
-Shims engine is bascially a subsystem of winodws that helps older or incompatible application to run on newer versions of Windows without modifying the application itself.
+Shims engine or Windows Compatibility Engine is bascially a subsystem of winodws that helps older or incompatible application to run on newer versions of Windows without modifying the application itself.
 
 Now you must be thinking BUT WHY DOES THIS EXIST ?
 
