@@ -192,8 +192,40 @@ to know some terms that will help us understand this.
 
 # REQUIRED PREREQUISITES
 
-Since Early Cascade Injection is an approach that stuns the windows internally the internal system plays a key role in making a system vulnerable . Below are some terms that acts as exection units / function for 
-this Technique.
+So Early Cascade Injection relies on very early _user-mode initialization_ . Now to understand what does this mean the following prerequisites are essential to know .
+
+Since all the process Injection techniques are executed in a process we need to undertand 
+_1._ Windows Process Ceration (User-Mode Focus)
+
+This will help us to understand what happens before a process actually "starts running".
+* Before the process starts running it is created in suspended state
+* Then Critical sections are initialized , it includes:
+  * _.mrdata Section_
+  * _.data Section_
+* Then the core DLLs are loaded , for ex - kernel32.dll
+_One very important point to note is that all these initialization finishes before EDR user-mode hooks are fully active._
+
+
+ We have already discussed APC injection in our previous blog **link to it** 
+ Early Cascade Injection depends on advanced APC behavior.
+
+To understand these behaviours we need to know some terms that we have already discussed in the blog or we will be discussing .
+
+- User APCs
+  * It always execute at Passive_level (Level 1 of IRQL)
+- Intra-process APCs
+  * Since early cascade is a within process injection technique (later discussed in detail)
+- ntdll!NtTestAlert
+  * This function executes all the queued APCs when the thread enters an alertable state.
+ 
+ _APCs must be queues before the process resumes , not after._
+
+ 
+    
+
+ 
+
+ 
 
 _SHIMS ENGINE_
 
