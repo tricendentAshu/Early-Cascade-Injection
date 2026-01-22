@@ -268,7 +268,7 @@ ECI (Early Cascade Injection) uses two payloads :
 
 Well now that we know the prerequisites we can start understanding , how we can use this novel approach to inject the shellcode within the process .
 
-Early Cscade Injection is a Windows user-mode Process Injection Technique in Windows that was introduced by OUTFLANK in 2024 . It injects/executes the shellcode during the process creation stage ( not after the process is created as in APC ) . 
+Early Cascade Injection is a Windows user-mode Process Injection Technique in Windows that was introduced by OUTFLANK in 2024 . It injects/executes the shellcode during the process creation stage ( not after the process is created as in APC ) . 
 
 This technique executes specifically in the *user-mode initialization phase* but before most EDR( Endpoint Detection and Response ) solution fully initialize their user-mode detection mechanisms.
 
@@ -365,12 +365,12 @@ In this process The Payload stub queues Intra-Process APC
 # _STEP 5_
 In this process the shim engine flag is disabled immedialtely , it helps to prevent 
  
- * Application crash because shim engine contains multiple parameters that should conation values because if there are no values then the programm will crash , but in early cascade our main work is with g_pfnSE function and as it is executed the shimes engine is turned off/disabled in order to prevent programm crash.
+ * Application crash because shim engine contains multiple parameters that should conation values because if there are no values then the program will crash , but in early cascade our main work is with g_pfnSE function and as it is executed the shimes engine is turned off/disabled in order to prevent programm crash.
  * Sometimes not disabling can cause Compatibility engine instability.
 
 # _STEP 6_
 
-This step reumes the process normally 
+This step resumes the process normally 
  * by this process kernel32.dll is loaded.
  * user-mode initialization is completed.
  * ntdll!NtTestAlert is executed in this step.
