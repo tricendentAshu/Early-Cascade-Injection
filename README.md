@@ -229,9 +229,9 @@ Now we should know
 _3._ WHY PASSIVE_LEVEL MATTERS 
 
 it matters because ,
- > User APC execution executes in PASSIVE_LEVEL only.
- > Early Cascade executes only in user mode.
- > No kernel IRQL abuse is required (because of stealth advantage).
+ * User APC execution executes in PASSIVE_LEVEL only.
+ * Early Cascade executes only in user mode.
+ * No kernel IRQL abuse is required (because of stealth advantage).
 
 
 _4._ SHIM ENGINE
