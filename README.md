@@ -299,14 +299,23 @@ But how does this Novel Approach processed
 To understand this we will use this technical flow and will understand it step-by-step:
 
 → Create suspended process
+
 → Write Stub + Main Payload
+
 → g_ShimsEnabled = 1
+
 → Point g_pfnSE_DllLoaded → Stub
+
 → Resume thread
+
 → Stub runs (via Shim callback)
+
 → g_ShimsEnabled = 0 immediately
+
 → Stub queues INTRA APC → Main Payload
+
 → NtTestAlert executes APC
+
 → Main Payload runs
 
 Did you got confused or stunned , No Worries we will help you understand this technical flow in a minute . Be with us .
