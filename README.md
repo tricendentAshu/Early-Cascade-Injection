@@ -1,4 +1,3 @@
-<img width="2752" height="1536" alt="unnamed (1)" src="https://github.com/user-attachments/assets/092e1c5a-408a-4fa3-b65e-bcecb7aef731" />
 # Deadlock
 
  When Threads Wait Forever
