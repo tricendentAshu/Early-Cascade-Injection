@@ -1,33 +1,93 @@
-# Deadlock
+# Deadlock - When Threads Wait Forever
+![deadlock analogy](https://github.com/user-attachments/assets/9806757e-9866-4aef-aa13-e36680a5b2fb)
+Let's take an analogy 
 
- When Threads Wait Forever
+Imagine a hostel with only one washing machine. Once a wash cycle starts, the machine automatically locks its door and keeps it locked until the cycle finishes.
 
- PROVIDE ANALOGY ............ ATIQ BHAI
+While the machine is still running, the system forces another start request. To start again, the door must be unlocked. The door unlocks only after the current cycle finishes. Since neither condition can be satisfied, the system becomes stuck.
 
- Deadlock is a state in which atleast two threads/processes are stuck in a loop because they are dependent on each other they are stick beacuse resource that is needed by other processes/threads is held 
- by the first one .
+This situation is deadlock.
 
- Because each thread holds a resource the other needs, and neither releases what they have until they get the other resource, they remain stuck forever unless something breaks the cycle.
+Now that we have a basic intuition about deadlock, let us look at the technical definition.
 
- But can it occur randomly , well the Answer is NO !
+Deadlock is a state in which two or more threads or processes are stuck indefinitely because they are dependent on each other. Each thread holds a resource that another thread needs, and none of them can proceed because the required resource is already occupied.
 
- For deadlock to occur it needs few conditions.
+Since every thread waits for a resource held by another thread, and no thread releases its own resource until it acquires the next one, the system enters a state where progress becomes impossible. The threads remain stuck forever unless something externally breaks this cycle.
 
- The Conditions are :
-  * Mutual Exclusion — Only one thread can hold a resource at a time.
-  * Hold and Wait — A thread holds at least one resource while waiting for others.
-  * No Preemption — Resources cannot be forcibly taken from a thread; they must be released voluntarily.
-  * Circular Wait — A circular chain of threads exists, where each waits for a resource held by the next.
+A natural question arises.
+Can deadlock occur randomly?
 
-   A Very important point is that for DEADLOCK to occur all four conditions should happen at same time , if any one of them breaks DEADLOCK is prevented .
+The answer is no.
 
-   As an example :
+Deadlock does not happen by chance. For a deadlock to occur, specific conditions must exist simultaneously.
 
-   Suppose an attacker intentionally induces a deadlock in an EDR component to stall the tool.
+# Conditions Required for Deadlock
 
-   But this attack does not let any attacker get entry directly to kernel . 
+Deadlock can occur only when all four of the following conditions are present at the same time.
 
-# SPECIAL USER APC INJECTION CODE (DEADLOCK CODE)
+Mutual Exclusion - 
+Only one thread can hold a resource at a time.
+
+Hold and Wait - 
+A thread holds at least one resource while waiting to acquire additional resources.
+
+No Preemption - 
+Resources cannot be forcibly taken away from a thread. They must be released voluntarily.
+
+Circular Wait - 
+A circular chain of threads exists, where each thread is waiting for a resource held by the next thread in the cycle.
+
+Important Note
+
+For deadlock to occur, all four conditions must be satisfied simultaneously.
+If even one condition is broken, deadlock is prevented.
+
+This is why deadlock is not accidental. It is the result of a very specific execution state.
+
+```Okay now lets come to the main point i.e why did we study deadlock.....the answer to this is to know its real application and that is Special User Apc```
+
+# Deadlock Risk in Special User APC
+<img width="2752" height="1536" alt="unnamed (11)" src="https://github.com/user-attachments/assets/410a104f-921c-4636-a31a-74b443dc8292" />
+
+
+Special User APC introduces deadlock risk not because of what it executes, but because of when it executes.
+
+A Windows thread normally runs in user mode and occasionally enters kernel mode through a system call. After the kernel finishes servicing the call, execution must return back to user mode. This return path is a critical boundary.
+
+During this return-to-user transition, the kernel checks whether a Special User APC is queued for the thread.
+
+If no Special User APC exists, the thread resumes normal user-mode execution.
+If a Special User APC exists, it is executed immediately, before the thread regains control.
+
+# So where the Risk Appears
+
+At the moment the Special User APC executes, the thread has not yet resumed its original user-mode execution. Although the kernel is done, the thread may still logically hold user-mode resources such as heap locks, loader locks, GUI locks, or critical sections.
+
+The APC runs inside the same thread context, not a new thread. If the APC code or any API it triggers needs a resource that the thread already holds, the thread ends up waiting for itself.
+
+At this point, progress becomes impossible.
+
+The thread cannot continue because it is blocked.
+The resource cannot be released because execution is blocked.
+
+This is a self-deadlock.
+
+# Why the Kernel Cannot Prevent This
+
+The kernel cannot see user-mode locks. It does not know what resources the thread was holding before the system call. Its responsibility is limited to delivering the APC at the correct architectural point, which is the return-to-user path.
+
+Because the kernel lacks visibility into user-mode state, it cannot verify whether APC execution is safe. The timing is correct from the kernel’s perspective, but unsafe from the thread’s perspective.
+
+# Key Takeaway
+
+Special User APC executes on the return-to-user path, before normal user-mode execution resumes. If the thread still holds user-mode resources and the APC needs those same resources, the thread waits for itself.
+
+This is why Microsoft discourages the use of Special User APC from user mode.
+
+Deadlock here is not caused by malicious code or incorrect logic.
+It is caused by forcing execution before the thread regains control and releases its resources.
+
+
 
 
 
