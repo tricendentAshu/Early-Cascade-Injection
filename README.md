@@ -319,7 +319,7 @@ To understand this we will use this technical flow and will understand it step-b
 
 → Main Payload runs
 
-Did you got confused or stunned , No Worries we will help you understand this technical flow in a minute . Be with us .
+I know what you're thinking is this some rocket science?.....Well its not we got you covered let's break this down in steps!
 
 
 # _STEP 1_ 
