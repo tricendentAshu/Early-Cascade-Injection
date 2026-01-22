@@ -259,7 +259,7 @@ ECI (Early Cascade Injection) uses two payloads :
  
  2. Main Payload
     * It is the actual shellcode.
-    * It is executed later after the process resumes via APC.
+    * It is executed later before the process resumes via APC.
 
 
  
