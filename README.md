@@ -321,6 +321,20 @@ To understand this we will use this technical flow and will understand it step-b
 Did you got confused or stunned , No Worries we will help you understand this technical flow in a minute . Be with us .
 
 
+# _STEP 1_ 
+Process is Created in Suspended State
+ * Here first the memory sections are mapped
+ * And the most important _.mrdata section_ and _.data section_ becomes accessible
+
+Before we proceed with this flow let us understand what is _.mrdata section_ & _.data section_ . 
+
+**.mrdata section** - it is a memory section behaviour that is 
+  * always Readable.
+  * Writable only when the process is suspended.
+  * and contains the most important (_g_pfnSE_ i.e shim engine function pointer).
+
+Now lets carry on with the technical flow 
+
 
 
 
