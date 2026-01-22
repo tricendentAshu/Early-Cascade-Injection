@@ -1,3 +1,4 @@
+
 # Deadlock
 
  When Threads Wait Forever
@@ -333,7 +334,75 @@ Before we proceed with this flow let us understand what is _.mrdata section_ & _
   * Writable only when the process is suspended.
   * and contains the most important (_g_pfnSE_ i.e shim engine function pointer).
 
-Now lets carry on with the technical flow 
+ **.data section** - 
+  * this memory section behaviour is always Readable & Writeable.
+  * It contains the Shim engine enable/disable flag (i.e boolean).
+
+Now lets carry on with the technical flow .
+
+# _STEP 2_
+Shim engine flag is enabled in _.data_ , this causes the _g_pfnSE_ function to be loaded from _.mrdata_.
+ *when the shimes engine is enabled it loads all the dependencies the very first parameter is does is loading the g_pfnSE function that is inside of the .mr data section then the payload stub is called by using its address by the g_pfnSE pointer and then the main payload is queued in the same process by the payload stub 
+
+
+# _STEP 3_
+In this process the Shim Engine executes Payload Stub (discussed in previous step)
+ * g_pfnSE callbacks the payload stub
+   but at this moment
+   * kernel32.dll is NOT fully loaded and
+   * EDR hooks are not active
+     
+     The main payload cannot run yet as dependencies are missing that will come in later steps.
+
+# _STEP 4_
+In this process The Payload stub queues Intra-Process APC
+ * The Payload stub calls _NtTestAlert_ logic here in an indirect manner
+ * APC is queued inside the same process(since eci)
+ * This is intra-process APC , not cross-process
+
+> EDRs mostly flag external APC queues , not internal ones.
+
+# _STEP 5_
+In this process the shim engine flag is disabled immedialtely , it helps to prevent 
+ 
+ * Application crash because shim engine contains multiple parameters that should conation values because if there are no values then the programm will crash , but in early cascade our main work is with g_pfnSE function and as it is executed the shimes engine is turned off/disabled in order to prevent programm crash.
+ * Sometimes not disabling can cause Compatibility engine instability.
+
+# _STEP 6_
+
+This step reumes the process normally 
+ * by this process kernel32.dll is loaded.
+ * user-mode initialization is completed.
+ * ntdll!NtTestAlert is executed in this step.
+
+# _STEP 7_
+
+The main payload is executed via queued APCs
+ * APC runs at PASSIVE_LEVEL.
+ * Main payload is executed safely.
+ * Because of intra-process APC it is stealth and EDR is not able to catch any _remote injection_ ,or _suspicious APC origin_.
+
+   After all these Steps you must be thinking WHY ECI IS MORE ADVANCED THAN APC INJECTION.
+
+   There are few parameters that will help us understand this :
+
+   The Parameters are :
+
+   Parameter                      APC Injection                 Early Cascade Injection
+
+   TIMING                         After process start             During Process Creation
+
+   APC TYPE                       Often Cross-Process             Intra - Process
+
+   SHIM EGINE                     Not Involved                    Involved
+   
+   EDR VISIBILITY                 High Chances of flagging        Very low
+
+   DEPENDENCY SAFETY              Risky                           Safe
+
+   for more clarity refer the image:
+
+   <img width="760" height="495" alt="image" src="https://github.com/user-attachments/assets/379ccdfd-1c11-433f-887b-1ca9504c1a83" />
 
 
 
