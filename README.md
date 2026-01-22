@@ -265,13 +265,51 @@ ECI (Early Cascade Injection) uses two payloads :
    
 # EARLY CASCADE INJECTION 
 
-Well now that we know the prerequisites we can start undertanding , how we can use this novel approach to inject the shellcode within the process .
+Well now that we know the prerequisites we can start understanding , how we can use this novel approach to inject the shellcode within the process .
 
-Early Cscade Injection is a Process Injection Technique in Windows that was introduced by OUTFLANK in 2024 . It injects the shellcode during the process creation stage ( not after the process is created as in APC ) . 
+Early Cscade Injection is a Windows user-mode Process Injection Technique in Windows that was introduced by OUTFLANK in 2024 . It injects/executes the shellcode during the process creation stage ( not after the process is created as in APC ) . 
 
 This technique executes specifically in the *user-mode initialization phase* but before most EDR( Endpoint Detection and Response ) solution fully initialize their user-mode detection mechanisms.
 
+In simple words It executes shellcode before most EDR solutions fully initialize their detection mechanisms.
+
 This technique also avoids drawbacks such as cross - process APC queuing becuase in this execution occurs within a process so it does not need other process to work and loader-lock restrictions.
+
+Now ,
+
+WHY EARLY CASCADE INJECTION ?
+
+Here is a simple breakdown for it ,
+
+WHY EARLY. 
+ * Because the execution occurs way before _kernel32.dll_ finishes loading.
+ * And also Before user-mode EDR hooks activate.
+
+ &
+
+WHY CASCADE. 
+* Because in this the execution happens in stages like shim engine triggers payload stub
+* Then payload stub ques APC
+* APC executes main payload later
+
+Simply _CASCADE means a process in which something is successively passed on or executed._
+
+But how does this Novel Approach processed 
+
+To understand this we will use this technical flow and will understand it step-by-step:
+
+→ Create suspended process
+→ Write Stub + Main Payload
+→ g_ShimsEnabled = 1
+→ Point g_pfnSE_DllLoaded → Stub
+→ Resume thread
+→ Stub runs (via Shim callback)
+→ g_ShimsEnabled = 0 immediately
+→ Stub queues INTRA APC → Main Payload
+→ NtTestAlert executes APC
+→ Main Payload runs
+
+Did you got confused or stunned , No Worries we will help you understand this technical flow in a minute . Be with us .
 
 
 
