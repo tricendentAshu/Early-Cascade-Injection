@@ -1,4 +1,4 @@
-
+<img width="2752" height="1536" alt="unnamed (1)" src="https://github.com/user-attachments/assets/092e1c5a-408a-4fa3-b65e-bcecb7aef731" />
 # Deadlock
 
  When Threads Wait Forever
@@ -386,23 +386,22 @@ The main payload is executed via queued APCs
 
    There are few parameters that will help us understand this :
 
-   The Parameters are :
-
-   Parameter                      APC Injection                 Early Cascade Injection
-
-   TIMING                         After process start             During Process Creation
-
-   APC TYPE                       Often Cross-Process             Intra - Process
-
-   SHIM EGINE                     Not Involved                    Involved
    
-   EDR VISIBILITY                 High Chances of flagging        Very low
 
-   DEPENDENCY SAFETY              Risky                           Safe
+| Feature           | Classic APC Injection | Early Cascade Injection |
+| ----------------- | --------------------- | ----------------------- |
+| Timing            | After process start   | During process creation |
+| APC Type          | Often cross-process   | Intra-process           |
+| Shim Engine       |  No                   |  Yes                    |
+| EDR Visibility    | High                  | Very Low                |
+| Dependency Safety | Risky                 | Safe                    |
+
+
 
    for more clarity refer the image:
 
-   <img width="760" height="495" alt="image" src="https://github.com/user-attachments/assets/379ccdfd-1c11-433f-887b-1ca9504c1a83" />
+  <img width="2752" height="1536" alt="unnamed (1)" src="https://github.com/user-attachments/assets/9f8ddd9f-5f5c-43d5-9c71-e3a729a16936" />
+
 
 
 
