@@ -195,14 +195,15 @@ to know some terms that will help us understand this.
 So Early Cascade Injection relies on very early _user-mode initialization_ . Now to understand what does this mean the following prerequisites are essential to know .
 
 Since all the process Injection techniques are executed in a process we need to undertand 
-_1._ Windows Process Ceration (User-Mode Focus)
+_1._ Windows Process Creation (User-Mode Focus)
 
 This will help us to understand what happens before a process actually "starts running".
 * Before the process starts running it is created in suspended state
 * Then Critical sections are initialized , it includes:
   * _.mrdata Section_
   * _.data Section_
-* Then the core DLLs are loaded , for ex - kernel32.dll
+* Then the core DLLs are loaded , for ex - kernel32.dll.
+  
 _One very important point to note is that all these initialization finishes before EDR user-mode hooks are fully active._
 
 
@@ -210,6 +211,8 @@ _One very important point to note is that all these initialization finishes befo
  Early Cascade Injection depends on advanced APC behavior.
 
 To understand these behaviours we need to know some terms that we have already discussed in the blog or we will be discussing .
+
+_2._ APC Fundamentals
 
 - User APCs
   * It always execute at Passive_level (Level 1 of IRQL)
@@ -220,23 +223,46 @@ To understand these behaviours we need to know some terms that we have already d
  
  _APCs must be queues before the process resumes , not after._
 
- 
-    
 
- 
+Now we should know 
 
- 
+_3._ WHY PASSIVE_LEVEL MATTERS 
 
-_SHIMS ENGINE_
+it matters because ,
+ > User APC execution executes in PASSIVE_LEVEL only.
+ > Early Cascade executes only in user mode.
+ > No kernel IRQL abuse is required (because of stealth advantage).
 
-Shims engine or Windows Compatibility Engine is bascially a subsystem of winodws that helps older or incompatible application to run on newer versions of Windows without modifying the application itself.
+
+_4._ SHIM ENGINE
+
+Shims engine or Windows Compatibility Engine is bascially a subsystem of windows that helps older or incompatible application to run on newer versions of Windows without modifying the application itself.
 
 Now you must be thinking BUT WHY DOES THIS EXIST ?
 
 Well it exists because when the windows evolves (windows 10 -> windows 11) , the APIs chnages , Security restriction increases this can lead to older application getting crashed or refuse to run , so instead of forcing developers to rewrite (which they will hate after every evolution)
 Windows uses SHIMS.
 
+This takes us to our last Prerequisite and that is ,
 
+_5._ Payload (or Shellcode) Staging Concept
+
+ECI (Early Cascade Injection) uses two payloads :
+
+ 1. PAYLOAD STUB
+    * It acts a a initialozer for our main payload.
+    * It is executed via the Shim Engine.
+    * It Queues APCs internally.
+
+   Now the MALICIOUS CODE
+ 
+ 2. Main Payload
+    * It is the actual shellcode.
+    * It is executed later after the process resumes via APC.
+
+
+ 
+   
 # EARLY CASCADE INJECTION 
 
 Well now that we know the prerequisites we can start undertanding , how we can use this novel approach to inject the shellcode within the process .
